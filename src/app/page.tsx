@@ -299,13 +299,13 @@ export default function HomePage() {
             in the right order, for longer than you think.&rdquo;
           </blockquote>
           <p className="eyebrow mt-8 text-salt/60">
-            Dr Iona Reid · Formulation lead
+            The house position, in one line
           </p>
           <Link
             href="/about"
             className="link-underline mt-10 inline-block text-sm text-salt/85"
           >
-            How the house was built
+            What else we will not do
           </Link>
         </div>
       </section>

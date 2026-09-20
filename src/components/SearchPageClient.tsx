@@ -136,15 +136,16 @@ export function SearchPageClient() {
         <div className="mt-20 max-w-md">
           <h2 className="display-md">No match for &ldquo;{q}&rdquo;.</h2>
           <p className="prose-body mt-4">
-            We keep sixteen products, so the catalogue is easy to exhaust. Try an
-            ingredient name, or tell us what your skin is doing and we will pick.
+            There are only sixteen products, so the catalogue runs out quickly.
+            Try an ingredient name instead, or let the routine finder choose for
+            you.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               href="/shop"
               className="bg-ink px-7 py-3.5 text-sm text-salt transition-colors hover:bg-brine"
             >
-              Browse everything
+              See all sixteen products
             </Link>
             <Link
               href="/routines"

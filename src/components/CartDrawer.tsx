@@ -114,7 +114,7 @@ export function CartDrawer() {
                     onClick={closeDrawer}
                     className="bg-ink px-6 py-3.5 text-center text-sm text-salt transition-colors hover:bg-brine"
                   >
-                    Browse everything
+                    Start with the catalogue
                   </Link>
                   <Link
                     href="/routines"

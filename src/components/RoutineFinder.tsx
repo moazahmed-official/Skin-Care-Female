@@ -137,8 +137,8 @@ export function RoutineFinder() {
               >
                 <p className="font-display text-xl">Nothing selected yet.</p>
                 <p className="prose-body mt-2 text-sm">
-                  Pick whatever is true. If everything is true, pick everything —
-                  we will send you to The Reset, which is where that should start.
+                  Pick whatever is true. If all of it is true, pick all of it and
+                  we will send you to The Reset, which is where that starts.
                 </p>
               </motion.div>
             ) : (

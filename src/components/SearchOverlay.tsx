@@ -180,9 +180,10 @@ export function SearchOverlay({
                 <div className="py-10 text-center">
                   <p className="font-display text-xl">Nothing under that name.</p>
                   <p className="prose-body mt-2">
-                    We keep a deliberately short catalogue — sixteen products in all.{" "}
+                    There are only sixteen products, so the catalogue is quick to
+                    read end to end.{" "}
                     <Link href="/shop" onClick={onClose} className="text-copper underline underline-offset-4">
-                      See everything
+                      See all sixteen
                     </Link>
                     .
                   </p>

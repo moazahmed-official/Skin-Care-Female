@@ -4,10 +4,10 @@ import { routines } from "@/data/routines";
 import { Wordmark } from "@/components/Wordmark";
 
 const help = [
-  { href: "/about", label: "About the house" },
+  { href: "/about", label: "How we formulate" },
   { href: "/routines", label: "Find your sequence" },
-  { href: "/shop/sets", label: "Sets & value" },
-  { href: "/search", label: "Search the catalogue" },
+  { href: "/shop/sets", label: "Sets" },
+  { href: "/search", label: "Search" },
 ];
 
 export function SiteFooter() {
@@ -38,8 +38,8 @@ export function SiteFooter() {
           <div className="md:col-span-5">
             <Wordmark className="h-5 w-auto text-salt" />
             <p className="prose-body mt-6 max-w-sm text-salt/65">
-              Formulated in Kirkwall, Orkney. Short ingredient lists, published
-              concentrations, and nothing added for the smell of it.
+              Formulated in Kirkwall, Orkney. Sixteen products, every
+              concentration printed, nothing added for the smell of it.
             </p>
 
             {/* Static demo: no back end is wired to this form. */}
@@ -48,7 +48,8 @@ export function SiteFooter() {
                 Four letters a year
               </label>
               <p className="mt-2 text-sm text-salt/55">
-                Formulation notes when something changes. Not a discount channel.
+                Formulation notes when something changes. No discounts, because
+                there are none.
               </p>
               <div className="mt-4 flex items-center border-b border-salt/25 focus-within:border-copper-light">
                 <input
@@ -105,7 +106,7 @@ export function SiteFooter() {
               </div>
 
               <div>
-                <h2 className="eyebrow text-salt/45">Elsewhere</h2>
+                <h2 className="eyebrow text-salt/45">Help</h2>
                 <ul className="mt-5 space-y-2.5">
                   {help.map((h) => (
                     <li key={h.href}>

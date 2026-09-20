@@ -156,8 +156,8 @@ export default async function ProductPage(props: PageProps<"/product/[slug]">) {
             What is in it
           </h2>
           <p className="prose-body mt-4 max-w-lg">
-            Concentrations below are the real inclusion rates, printed here and on
-            the carton.
+            The figures below are the actual inclusion rates. They appear here
+            and on the carton, and they are the same number.
           </p>
 
           <ul className="mt-9 divide-y divide-ink/12 border-y border-ink/12">

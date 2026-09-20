@@ -24,7 +24,7 @@ export default function NotFound() {
         <p className="eyebrow text-ink/45">404</p>
         <h1 className="display-lg mt-5">This one went out with the tide.</h1>
         <p className="prose-body mx-auto mt-6 max-w-md">
-          The page is not here. It may have been a product we retired — the range
+          The page is not here. It may have been a product we retired: the range
           stays at sixteen, so when something new arrives, something leaves.
         </p>
         <div className="mt-10 flex flex-wrap justify-center gap-3">
@@ -32,13 +32,13 @@ export default function NotFound() {
             href="/shop"
             className="bg-ink px-8 py-4 text-sm text-salt transition-colors hover:bg-brine"
           >
-            Browse the catalogue
+            See all sixteen products
           </Link>
           <Link
             href="/search"
             className="border border-ink px-8 py-4 text-sm transition-colors hover:bg-ink hover:text-salt"
           >
-            Search
+            Search by name or ingredient
           </Link>
         </div>
       </div>

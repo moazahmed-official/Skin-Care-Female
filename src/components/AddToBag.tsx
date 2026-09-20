@@ -44,7 +44,7 @@ export function AddToBag({
       className={`relative w-full overflow-hidden bg-ink px-8 py-[1.15rem] text-sm text-salt transition-colors hover:bg-brine ${className}`}
     >
       <span className="relative z-10">
-        {justAdded ? "Added to your bag" : `Add to bag — ${formatPrice(product.price * qty)}`}
+        {justAdded ? "Added to your bag" : `Add to bag · ${formatPrice(product.price * qty)}`}
       </span>
     </button>
   );

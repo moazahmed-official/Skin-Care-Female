@@ -18,7 +18,7 @@ export default function ShopPage() {
         categories={categories}
         heading="Everything we make"
         eyebrow="The full catalogue"
-        intro="Sixteen products. Each one exists because there was a job nothing else in the range could do. Filter by what your skin is actually doing, not by what you were told to want."
+        intro="Sixteen products. Each one exists because there was a job nothing else in the range could do. Filter by what your skin is doing, or sort by the order things go on."
       />
     </Suspense>
   );

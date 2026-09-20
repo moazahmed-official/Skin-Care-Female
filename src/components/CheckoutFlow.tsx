@@ -52,7 +52,7 @@ function validate(step: StepId, form: FormState): Errors {
   const e: Errors = {};
   if (step === "contact") {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(form.email.trim()))
-      e.email = "We need a working email to send the batch record to.";
+      e.email = "Check this address. The receipt goes here.";
   }
   if (step === "delivery") {
     if (!form.firstName.trim()) e.firstName = "Required";
@@ -61,14 +61,14 @@ function validate(step: StepId, form: FormState): Errors {
     if (!form.city.trim()) e.city = "Required";
     // Loose UK postcode shape — enough to catch a typo, not to reject a valid one.
     if (!/^[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}$/i.test(form.postcode.trim()))
-      e.postcode = "That does not look like a UK postcode.";
+      e.postcode = "Check the postcode format.";
   }
   if (step === "payment") {
     const digits = form.card.replace(/\s+/g, "");
-    if (!/^\d{16}$/.test(digits)) e.card = "Sixteen digits.";
+    if (!/^\d{16}$/.test(digits)) e.card = "Enter 16 digits.";
     if (!/^(0[1-9]|1[0-2])\s*\/\s*\d{2}$/.test(form.expiry.trim()))
-      e.expiry = "MM / YY";
-    if (!/^\d{3,4}$/.test(form.cvc.trim())) e.cvc = "3 or 4 digits";
+      e.expiry = "Use MM / YY.";
+    if (!/^\d{3,4}$/.test(form.cvc.trim())) e.cvc = "3 or 4 digits.";
     if (!form.nameOnCard.trim()) e.nameOnCard = "Required";
   }
   return e;
@@ -131,7 +131,7 @@ export function CheckoutFlow() {
             two working days.
           </p>
           <p className="prose-body mx-auto mt-4 max-w-md text-sm">
-            This is a fictional storefront built as a design exercise — no payment
+            This is a fictional storefront built as a design exercise. No payment
             was taken and nothing will arrive.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
@@ -166,7 +166,7 @@ export function CheckoutFlow() {
             href="/shop"
             className="bg-ink px-8 py-4 text-sm text-salt transition-colors hover:bg-brine"
           >
-            Browse the catalogue
+            See all sixteen products
           </Link>
           <Link
             href="/routines"
@@ -236,10 +236,10 @@ export function CheckoutFlow() {
               >
                 {step === "contact" && (
                   <fieldset>
-                    <legend className="display-md">Where do we send the receipt?</legend>
+                    <legend className="display-md">Contact</legend>
                     <p className="prose-body mt-3 max-w-md">
-                      One email per order, plus the batch record. We do not add you
-                      to anything.
+                      For the receipt and the dispatch note. One email per order,
+                      and no list.
                     </p>
                     <div className="mt-8 max-w-md">
                       <Field
@@ -258,10 +258,9 @@ export function CheckoutFlow() {
 
                 {step === "delivery" && (
                   <fieldset>
-                    <legend className="display-md">Where is it going?</legend>
+                    <legend className="display-md">Delivery address</legend>
                     <p className="prose-body mt-3 max-w-md">
-                      Dispatched from Kirkwall. Two to four working days to UK
-                      mainland addresses.
+                      Two to four working days to UK mainland addresses.
                     </p>
                     <div className="mt-8 grid max-w-xl gap-6 sm:grid-cols-2">
                       <Field
@@ -322,8 +321,8 @@ export function CheckoutFlow() {
                   <fieldset>
                     <legend className="display-md">Payment</legend>
                     <p className="prose-body mt-3 max-w-md">
-                      A demonstration form on a fictional storefront. Do not enter a
-                      real card number — nothing here is processed or stored.
+                      A demonstration form. Nothing is processed or stored, so do
+                      not enter a real card number.
                     </p>
                     <div className="mt-8 grid max-w-xl gap-6 sm:grid-cols-2">
                       <Field

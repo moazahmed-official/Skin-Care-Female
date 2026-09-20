@@ -44,7 +44,7 @@ export function CartView() {
             href="/shop"
             className="bg-ink px-8 py-4 text-sm text-salt transition-colors hover:bg-brine"
           >
-            Browse everything
+            See all sixteen products
           </Link>
           <Link
             href="/routines"

@@ -63,8 +63,8 @@ export default function RoutinesPage() {
         <p className="prose-body mt-6 max-w-xl">
           You can own every correct product and get nothing from them by applying
           them in the wrong order, on the wrong nights, at a strength your barrier
-          is not ready for. Below are the five sequences we actually recommend.
-          One of them is three products long.
+          is not ready for. Below are the five sequences we recommend. One of them
+          is three products long, and for a lot of people that is the right one.
         </p>
       </header>
 
@@ -166,7 +166,7 @@ export default function RoutinesPage() {
             href="/shop"
             className="mt-10 inline-block bg-salt px-8 py-4 text-sm text-ink transition-colors hover:bg-copper-light"
           >
-            Browse the catalogue
+            See all sixteen products
           </Link>
         </div>
       </section>
