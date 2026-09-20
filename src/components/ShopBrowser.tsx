@@ -106,7 +106,7 @@ export function ShopBrowser({
       {/* ---- Category rail ----------------------------------------- */}
       <nav aria-label="Product categories" className="relative border-y border-ink/12 bg-haze/25">
         <div className="shell">
-          <ul className="rail-scroll -mx-1 flex items-center gap-2 overflow-x-auto py-4 pr-8">
+          <ul className="rail-scroll flex items-center gap-2 overflow-x-auto py-4 pr-10">
             <li>
               <Link
                 href="/shop"
