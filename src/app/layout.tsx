@@ -20,7 +20,9 @@ const archivo = Archivo({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://lumenandsalt.com"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://lemonsalt.digiwaytec.com",
+  ),
   title: {
     default: "Lumen & Salt — Cold-water skincare",
     template: "%s · Lumen & Salt",
