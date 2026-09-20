@@ -199,28 +199,75 @@ export default function HomePage() {
 
       {/* ---- Category index ---------------------------------------- */}
       <section aria-labelledby="categories-heading" className="shell py-24 md:py-32">
-        <p className="eyebrow text-ink/45">The catalogue</p>
-        <h2 id="categories-heading" className="display-md mt-3 max-w-2xl">
-          Eight categories. Nothing in any of them that we would not use.
-        </h2>
+        <div className="flex flex-wrap items-end justify-between gap-4 border-b border-ink/15 pb-7">
+          <div>
+            <p className="eyebrow text-ink/45">The catalogue</p>
+            <h2 id="categories-heading" className="display-md mt-3 max-w-2xl">
+              Eight categories. Nothing in any of them that we would not use.
+            </h2>
+          </div>
+          <Link href="/shop" className="link-underline eyebrow shrink-0 text-copper">
+            Shop everything
+          </Link>
+        </div>
 
         <ScrollReveal
           selector="[data-cat]"
-          className="mt-12 grid gap-x-6 gap-y-px sm:grid-cols-2 lg:grid-cols-4"
+          className="mt-10 grid grid-cols-2 gap-x-5 gap-y-5 md:grid-cols-4 md:gap-x-6"
         >
-          {categories.map((c) => {
+          {categories.map((c, i) => {
             const count = products.filter((p) => p.category === c.slug).length;
+            const accentVar = `var(--color-${c.accent}${c.accent === "copper" || c.accent === "brine" ? "-light" : ""})`;
             return (
               <Link
                 key={c.slug}
                 href={`/shop/${c.slug}`}
                 data-cat
-                className="group flex items-baseline justify-between gap-4 border-t border-ink/15 py-5 transition-colors hover:border-copper"
+                className="group relative isolate flex aspect-4/5 flex-col justify-between overflow-hidden border border-ink/12 bg-haze/35 p-5 transition-colors duration-500 hover:border-ink/25"
               >
-                <span className="font-display text-2xl transition-colors group-hover:text-copper">
-                  {c.name}
+                {/* generated field, unique per category via its accent + index */}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 opacity-70 transition-transform duration-700 ease-tide group-hover:scale-[1.06]"
+                  style={{
+                    backgroundImage: `radial-gradient(120% 85% at ${20 + ((i * 27) % 55)}% 8%, ${accentVar}33 0%, transparent 60%)`,
+                  }}
+                />
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 200 240"
+                  preserveAspectRatio="none"
+                  className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.22]"
+                >
+                  {Array.from({ length: 6 }).map((_, j) => {
+                    const y = 30 + j * 26 + (i % 3) * 6;
+                    return (
+                      <path
+                        key={j}
+                        d={`M-20 ${y} C 40 ${y - 12}, 80 ${y + 14}, 140 ${y} S 190 ${y - 10}, 220 ${y + 4}`}
+                        stroke={accentVar}
+                        strokeWidth="1"
+                        fill="none"
+                      />
+                    );
+                  })}
+                </svg>
+
+                <span className="eyebrow relative w-fit bg-salt/80 px-2 py-1 tabular-nums text-ink/50 backdrop-blur-sm">
+                  {String(count).padStart(2, "0")}
                 </span>
-                <span className="eyebrow tabular-nums text-ink/35">{count}</span>
+
+                <div className="relative">
+                  <span className="font-display text-[1.6rem] leading-[1.05] transition-colors group-hover:text-copper sm:text-3xl">
+                    {c.name}
+                  </span>
+                  <span className="mt-2 flex items-center gap-2 text-xs text-ink/50">
+                    <span className="link-underline">Shop the line</span>
+                    <svg width="11" height="9" viewBox="0 0 11 9" fill="none" aria-hidden="true" className="shrink-0 transition-transform duration-300 group-hover:translate-x-1">
+                      <path d="M0.5 4.5h9.5M6.5 1l4 3.5-4 3.5" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                </div>
               </Link>
             );
           })}

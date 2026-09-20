@@ -20,6 +20,7 @@ export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const isCheckout = pathname.startsWith("/checkout");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -52,6 +53,28 @@ export function SiteHeader() {
       document.body.style.overflow = "";
     };
   }, [menuVisible]);
+
+  // Checkout gets a stripped, calm bar — wordmark, step context, a way back
+  // to the bag — with no catalogue nav, search or bag count competing for
+  // attention while someone is paying.
+  if (isCheckout) {
+    return (
+      <header className="sticky top-0 z-50 border-b border-ink/12 bg-salt/95 backdrop-blur-md">
+        <div className="shell flex h-[4.25rem] items-center justify-between gap-4 md:h-20">
+          <Link
+            href="/"
+            aria-label="Lumen and Salt, home"
+            className="shrink-0 text-ink transition-opacity hover:opacity-70"
+          >
+            <Wordmark className="h-[1.05rem] w-auto md:h-[1.2rem]" />
+          </Link>
+          <Link href="/cart" className="eyebrow link-underline text-ink/60 hover:text-ink">
+            Back to bag
+          </Link>
+        </div>
+      </header>
+    );
+  }
 
   return (
     <>

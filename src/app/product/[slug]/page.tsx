@@ -97,7 +97,7 @@ export default async function ProductPage(props: PageProps<"/product/[slug]">) {
               vessel={product.vessel}
               uid={`pdp-${product.slug}`}
               mark={product.name.slice(0, 1)}
-              className="relative h-[78%] w-auto drop-shadow-[0_26px_55px_rgba(14,29,36,0.25)]"
+              className="relative h-[86%] w-auto drop-shadow-[0_26px_55px_rgba(14,29,36,0.25)]"
             />
           </div>
         </div>

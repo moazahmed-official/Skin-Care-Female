@@ -104,31 +104,31 @@ export function ShopBrowser({
       </header>
 
       {/* ---- Category rail ----------------------------------------- */}
-      <nav aria-label="Product categories" className="border-y border-ink/12">
+      <nav aria-label="Product categories" className="relative border-y border-ink/12 bg-haze/25">
         <div className="shell">
-          <ul className="rail-scroll -mx-1 flex items-center gap-1 overflow-x-auto py-3">
+          <ul className="rail-scroll -mx-1 flex items-center gap-2 overflow-x-auto py-4 pr-8">
             <li>
               <Link
                 href="/shop"
                 aria-current={!activeCategory ? "page" : undefined}
-                className={`block whitespace-nowrap px-3.5 py-2 text-sm transition-colors ${
+                className={`block shrink-0 whitespace-nowrap rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
                   !activeCategory
-                    ? "bg-ink text-salt"
-                    : "text-ink/65 hover:bg-ink/6 hover:text-ink"
+                    ? "border-ink bg-ink text-salt"
+                    : "border-ink/15 text-ink/65 hover:border-ink/40 hover:text-ink"
                 }`}
               >
                 All
               </Link>
             </li>
             {categories.map((c) => (
-              <li key={c.slug}>
+              <li key={c.slug} className="shrink-0">
                 <Link
                   href={`/shop/${c.slug}`}
                   aria-current={activeCategory === c.slug ? "page" : undefined}
-                  className={`block whitespace-nowrap px-3.5 py-2 text-sm transition-colors ${
+                  className={`block whitespace-nowrap rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
                     activeCategory === c.slug
-                      ? "bg-ink text-salt"
-                      : "text-ink/65 hover:bg-ink/6 hover:text-ink"
+                      ? "border-ink bg-ink text-salt"
+                      : "border-ink/15 text-ink/65 hover:border-ink/40 hover:text-ink"
                   }`}
                 >
                   {c.name}
@@ -137,6 +137,11 @@ export function ShopBrowser({
             ))}
           </ul>
         </div>
+        {/* Edge fade — signals the rail keeps going off-screen on mobile. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-linear-to-l from-haze/70 to-transparent md:hidden"
+        />
       </nav>
 
       {/* ---- Filter bar -------------------------------------------- */}

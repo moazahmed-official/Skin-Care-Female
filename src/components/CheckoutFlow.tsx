@@ -6,7 +6,6 @@ import { AnimatePresence, motion } from "motion/react";
 import { useCart, formatPrice } from "@/lib/cart";
 import { Vessel } from "@/components/Vessel";
 import { Field } from "@/components/Field";
-import { Wordmark } from "@/components/Wordmark";
 
 type StepId = "contact" | "delivery" | "payment" | "done";
 
@@ -184,17 +183,7 @@ export function CheckoutFlow() {
 
   return (
     <div className="shell py-12 md:py-16">
-      {/* ---- Checkout masthead ------------------------------------ */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-ink/15 pb-6">
-        <Link href="/" aria-label="Lumen and Salt, home" className="text-ink">
-          <Wordmark className="h-4 w-auto" />
-        </Link>
-        <Link href="/cart" className="link-underline text-sm text-ink/60">
-          Back to bag
-        </Link>
-      </div>
-
-      <div className="grid gap-12 pt-10 lg:grid-cols-12 lg:gap-16">
+      <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
         {/* ---- Form ----------------------------------------------- */}
         <div className="lg:col-span-7">
           {/* Progress — numbered, with completed steps clickable. */}

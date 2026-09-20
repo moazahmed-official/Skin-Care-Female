@@ -3,7 +3,7 @@ import { Fraunces, Archivo } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/lib/cart";
 import { SiteHeader } from "@/components/SiteHeader";
-import { SiteFooter } from "@/components/SiteFooter";
+import { ConditionalFooter } from "@/components/ConditionalFooter";
 import { CartDrawer } from "@/components/CartDrawer";
 
 const fraunces = Fraunces({
@@ -52,7 +52,7 @@ export default function RootLayout({
           </a>
           <SiteHeader />
           <main id="main">{children}</main>
-          <SiteFooter />
+          <ConditionalFooter />
           <CartDrawer />
         </CartProvider>
       </body>

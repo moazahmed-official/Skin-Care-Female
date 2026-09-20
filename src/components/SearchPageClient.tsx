@@ -73,7 +73,8 @@ export function SearchPageClient() {
 
   return (
     <div className="shell py-14 md:py-20">
-      <h1 className="display-lg">Search</h1>
+      <p className="eyebrow text-ink/45">The full catalogue, indexed</p>
+      <h1 className="display-lg mt-3">Search</h1>
 
       <div className="mt-8 max-w-2xl">
         <label htmlFor="search-input" className="sr-only">
