@@ -132,6 +132,21 @@ export function SiteFooter() {
             <span>Recyclable glass</span>
           </p>
         </div>
+
+        <div className="mt-4 border-t border-salt/12 pt-4 text-xs text-salt/45">
+          <p>
+            Lumen &amp; Salt is a sample project developed by{" "}
+            <a
+              href="https://digiwaytec.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-underline text-salt/70 hover:text-salt"
+            >
+              Digiway Tec
+            </a>{" "}
+            (Digiway for Software Solutions).
+          </p>
+        </div>
       </div>
     </footer>
   );

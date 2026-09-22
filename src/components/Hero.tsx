@@ -2,31 +2,32 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { products } from "@/data/products";
-import { Vessel } from "@/components/Vessel";
 
 /**
- * SIGNATURE INTERACTION — "The Tide Line"
- *
- * The hero is built around a single cinematic plate: real footage of cold
- * North Atlantic water, shot close to the surface. No synthetic geometry,
- * no shader standing in for water — the realism comes from the footage
+ * THE HERO — a single cinematic plate: real footage of cold North
+ * Atlantic water, shot close to the surface. No synthetic geometry, no
+ * shader standing in for water — the realism comes from the footage
  * itself, graded to the brand's tidal-ink palette. The site's job is to
  * compose around it, not to fake it.
  *
- * The tide value `t` (0–1) still ties pointer, keyboard and product
- * selection together, but its job changed with the medium: rather than
- * deforming a wave mesh, it makes a restrained, cinematographer's set of
- * adjustments — a slow parallax drift on the plate, a soft vignette
- * breathing with intent, and the crossfade between the three featured
- * formulations. Nothing "plays" the water like an instrument; it stays
- * a real, continuous, gently observed body of water throughout.
+ * The composition borrows the brand's own device rather than inventing
+ * a hero-specific one: everywhere else on the site, a claim sits next
+ * to a number (16 products, SPF 50, 0% fragrance) instead of an
+ * adjective. The hero is the one place that device was missing — it
+ * read as a generic "headline over video" pattern because it was one.
+ * The headline now sits low and left, asymmetric rather than centred,
+ * with a thin rule and the same three-figure evidence strip used on
+ * the homepage running beside it — specific, not decorative.
  *
- * The video is muted, loops, and autoplays only past a readiness gate so
- * the poster frame — extracted from the same encode, so grade and crop
- * always match exactly — is what reduced-motion visitors, slow
- * connections, and the very first paint see. Nothing about legibility
- * depends on the video loading.
+ * Contrast is enforced, not hoped for: every line of text sits on top of
+ * a scrim weighted toward the lower third, where the whole composition
+ * now lives, so it reads clearly regardless of what the footage is
+ * doing underneath it at that moment.
+ *
+ * The video is muted, loops, and autoplays; the poster frame — extracted
+ * from the same encode, so grade and crop always match exactly — is
+ * what reduced-motion visitors, slow connections, and the very first
+ * paint see. Nothing about legibility depends on the video loading.
  *
  * There is exactly one encoded source and one `<section>`. Every
  * viewport renders the same shot with `object-cover`; nothing swaps a
@@ -38,21 +39,21 @@ import { Vessel } from "@/components/Vessel";
  * a handoff into the next section rather than a hard cut.
  */
 
-const featured = ["cold-current", "long-night", "noon-mineral"]
-  .map((s) => products.find((p) => p.slug === s)!)
-  .filter(Boolean);
+const evidence = [
+  { figure: "16", label: "Products. No plans for a seventeenth." },
+  { figure: "SPF 50", label: "The one thing we'd tell you to buy first." },
+  { figure: "0%", label: "Fragrance added for the smell of it." },
+];
 
 export function Hero() {
   const rootRef = useRef<HTMLElement>(null);
   const plateRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const bottleRef = useRef<HTMLDivElement>(null);
   const scrollFxRef = useRef<HTMLDivElement>(null);
   const targetRef = useRef(0.5);
   const currentRef = useRef(0.5);
   const rafRef = useRef<number | null>(null);
 
-  const [active, setActive] = useState(0);
   const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
@@ -64,8 +65,8 @@ export function Hero() {
   }, []);
 
   // The animation loop: a restrained, cinematographer's set of moves —
-  // slow parallax drift on the plate and the bottle, nothing that reads
-  // as "driving" the water itself.
+  // slow parallax drift on the plate, nothing that reads as "driving"
+  // the water itself.
   useEffect(() => {
     if (reduced) return;
 
@@ -84,10 +85,6 @@ export function Hero() {
         plateRef.current.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${scale})`;
       }
 
-      if (bottleRef.current) {
-        bottleRef.current.style.transform = `translate3d(${(t - 0.5) * -18}px, ${(0.5 - t) * 8}px, 0) rotate(${(t - 0.5) * 1.6}deg)`;
-      }
-
       rafRef.current = requestAnimationFrame(render);
     };
 
@@ -98,9 +95,9 @@ export function Hero() {
     };
   }, [reduced]);
 
-  // Pointer drags the tide sideways across three formulations — the same
-  // gesture the site has always used, now reading as a slow reframe of
-  // the shot rather than a control surface for the water.
+  // Pointer drifts the plate very slightly — an atmospheric response,
+  // not a control surface. Kept subtle on purpose: this hero's job is
+  // to read clearly, not to demonstrate interactivity.
   useEffect(() => {
     const el = rootRef.current;
     if (!el) return;
@@ -109,8 +106,6 @@ export function Hero() {
       const rect = el.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width;
       targetRef.current = Math.min(Math.max(x, 0), 1);
-      const idx = Math.min(Math.floor(x * featured.length), featured.length - 1);
-      setActive((prev) => (prev === idx ? prev : idx));
     };
 
     el.addEventListener("pointermove", onMove);
@@ -152,14 +147,6 @@ export function Hero() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [reduced]);
 
-  const select = (i: number) => {
-    setActive(i);
-    targetRef.current = (i + 0.5) / featured.length;
-    if (reduced) currentRef.current = targetRef.current;
-  };
-
-  const product = featured[active];
-
   return (
     <section
       ref={rootRef}
@@ -168,17 +155,12 @@ export function Hero() {
     >
       {/* A CSS grid with one track: water plate and content column are
           stacked in the same cell, so the content column's natural
-          height (it's the only thing that actually has intrinsic
-          height — the plate is just told to fill whatever that turns
-          out to be) is what sizes the whole hero on every viewport.
-          This is what keeps the video/poster and the text column
-          exactly the same height as each other, on mobile and desktop
-          alike — no more plate ending early and a second panel showing
-          through beneath it, and no separate background-image layer
-          left visible at the edges once the video is playing. */}
+          height is what sizes the whole hero on every viewport. This is
+          what keeps the video/poster and the text column exactly the
+          same height as each other, on mobile and desktop alike. */}
       <div
         ref={scrollFxRef}
-        className="grid min-h-140 will-change-transform sm:min-h-[92svh]"
+        className="grid min-h-160 will-change-transform sm:min-h-[92svh] sm:max-h-260"
       >
         {/* ---- The water plate ------------------------------------ */}
         <div
@@ -219,105 +201,78 @@ export function Hero() {
             )}
           </div>
 
-          {/* A single graded depth pass over the plate: it darkens the
-              lower two-thirds toward ink (where the wordline and copy
-              sit) without touching the footage's own tonal range near
-              the top, where the water is already doing the work. */}
-          <div className="absolute inset-0 bg-linear-to-b from-transparent via-ink/15 to-ink/55" />
-          <div className="absolute inset-0 bg-linear-to-t from-ink/40 via-transparent to-transparent" />
+          {/* Contrast scrim: one clean gradient, darkest at the very
+              bottom edge where the composition lives, easing to a
+              light touch at the top. Kept to a single layer — two
+              stacked gradients here previously compounded into a soft
+              bloom low in the frame that read as an unwanted glow
+              rather than a tonal shift. */}
+          <div className="absolute inset-0 bg-linear-to-b from-ink/20 to-ink/75" />
         </div>
 
-        <div className="shell relative col-start-1 row-start-1 flex flex-col justify-between gap-12 pb-8 pt-14 sm:gap-0 sm:pb-10 sm:pt-20">
-          {/* ---- Above the line ------------------------------------- */}
-          <div className="max-w-4xl">
-            <p className="eyebrow text-salt/60">Kirkwall, Orkney · 59°N</p>
-            <h1 id="hero-heading" className="display-xl mt-5 text-salt sm:mt-6">
-              Cold water
-              <br />
-              <span className="italic text-brine-light">makes better</span>
-              <br />
-              skin.
-            </h1>
-            <p className="prose-body mt-6 max-w-md text-salt/80 sm:mt-7">
-              Sixteen products. Every concentration printed on the carton, because
-              a percentage you cannot read is a percentage that is not there.
-            </p>
-          </div>
+        <div className="shell relative col-start-1 row-start-1 flex flex-col justify-end pb-14 pt-14 sm:pb-16 sm:pt-20">
+          {/* Eyebrow sits high and alone — a quiet establishing line,
+              not part of the main block below it. */}
+          <p className="eyebrow text-salt drop-shadow-[0_1px_6px_rgba(0,0,0,0.6)]">
+            Kirkwall, Orkney · 59°N
+          </p>
 
-          {/* ---- Below the line ------------------------------------- */}
-          <div className="relative mt-10 grid gap-7 text-salt sm:mt-16 md:mt-24 md:grid-cols-12 md:items-end md:gap-8">
-            {/* The bottle — a quiet presence in its own region of the
-                frame, not a centred hero object competing with the water. */}
-            <div className="order-1 md:order-2 md:col-span-4 md:col-start-9">
-              <div
-                ref={bottleRef}
-                className="mx-auto w-24 will-change-transform sm:w-40 md:ml-auto md:mr-0"
+          {/* The composition: headline held left and low against the
+              frame — asymmetric, editorial, the way the rest of the
+              site sets a claim next to evidence rather than floating
+              text in the centre of a canvas. The evidence strip below
+              it borrows the brand's own device (a figure standing in
+              for an adjective) straight from the homepage, so the hero
+              reads as this brand's opening line rather than a generic
+              "headline over video" pattern. */}
+          <div className="mt-auto grid gap-10 sm:grid-cols-12 sm:items-end sm:gap-8">
+            <div className="sm:col-span-8 lg:col-span-7">
+              <h1
+                id="hero-heading"
+                className="display-xl text-salt drop-shadow-[0_2px_18px_rgba(0,0,0,0.55)]"
               >
-                <Vessel
-                  vessel={product.vessel}
-                  uid={`hero-${product.slug}`}
-                  mark={product.name.slice(0, 1)}
-                  className="h-auto w-full drop-shadow-[0_18px_40px_rgba(0,0,0,0.5)]"
-                />
-              </div>
-            </div>
-
-            <div className="order-2 md:order-1 md:col-span-5" aria-live="polite">
-              <p className="eyebrow text-brine-light/80">
-                {String(active + 1).padStart(2, "0")} / {String(featured.length).padStart(2, "0")}
-              </p>
-              <h2 className="display-md mt-2.5 sm:mt-3">
-                <Link href={`/product/${product.slug}`} className="link-underline">
-                  {product.name}
-                </Link>
-              </h2>
-              <p className="mt-1 text-sm text-salt/70">{product.descriptor}</p>
-              <p
-                key={product.slug}
-                className="prose-body mt-3 max-w-sm text-salt/85 sm:mt-4"
-                style={{ animation: reduced ? undefined : "heroFade 0.6s var(--ease-tide)" }}
-              >
-                {product.shelfLine}
+                Cold water
+                <br />
+                <span className="italic text-brine-light">makes better</span>
+                <br />
+                skin.
+              </h1>
+              <p className="prose-body mt-6 max-w-md text-salt drop-shadow-[0_1px_10px_rgba(0,0,0,0.55)]">
+                Every concentration printed on the carton, because a
+                percentage you cannot read is a percentage that is not there.
               </p>
 
-              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 sm:mt-8">
+              <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
                 <Link
-                  href={`/product/${product.slug}`}
+                  href="/shop"
                   className="inline-flex h-12 items-center bg-salt px-7 text-sm text-ink transition-colors hover:bg-copper-light"
                 >
-                  Read the formula
+                  Shop the catalogue
                 </Link>
-                <Link href="/routines" className="link-underline text-sm text-salt/85">
+                <Link
+                  href="/routines"
+                  className="link-underline text-sm text-salt drop-shadow-[0_1px_6px_rgba(0,0,0,0.6)]"
+                >
                   Or start with a sequence
                 </Link>
               </div>
             </div>
-          </div>
 
-          {/* ---- Tide control: keyboard-operable, not decorative ----- */}
-          {/* Not a tablist: there are no tabpanels. It is a group of toggles
-              that swap the featured formulation shown above. */}
-          <div
-            role="group"
-            aria-label="Featured formulations"
-            className="relative mt-8 flex items-center gap-1 border-t border-salt/25 pt-4 sm:mt-10"
-          >
-            {featured.map((p, i) => (
-              <button
-                key={p.slug}
-                type="button"
-                aria-pressed={active === i}
-                onClick={() => select(i)}
-                onFocus={() => select(i)}
-                className={`flex-1 border-t-2 py-3 text-left transition-colors ${
-                  active === i
-                    ? "border-copper-light text-salt"
-                    : "border-transparent text-salt/50 hover:text-salt/80"
-                }`}
-              >
-                <span className="eyebrow block truncate">{p.name}</span>
-              </button>
-            ))}
+            {/* The evidence strip — three figures, borrowed from the
+                homepage's own claim-plus-number device. Runs beside the
+                headline on wide screens, drops below it on narrow ones. */}
+            <dl className="grid grid-cols-3 gap-5 border-t border-salt/25 pt-5 sm:col-span-4 sm:col-start-9 sm:grid-cols-1 sm:gap-6 sm:border-t-0 sm:border-l sm:pl-8 sm:pt-0 lg:col-span-5 lg:col-start-8">
+              {evidence.map((e) => (
+                <div key={e.figure}>
+                  <dt className="font-display text-2xl text-copper-light drop-shadow-[0_1px_10px_rgba(0,0,0,0.5)] sm:text-3xl">
+                    {e.figure}
+                  </dt>
+                  <dd className="mt-1 text-xs leading-snug text-salt/80 drop-shadow-[0_1px_6px_rgba(0,0,0,0.6)] sm:text-sm">
+                    {e.label}
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </div>
 
           {/* ---- Scroll cue: leads the eye into the next section ----- */}
@@ -333,7 +288,7 @@ export function Hero() {
             }}
             className="group absolute bottom-3 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 sm:flex"
           >
-            <span className="eyebrow text-salt/45 transition-colors group-hover:text-salt/75">
+            <span className="eyebrow text-salt/80 transition-colors group-hover:text-salt">
               Scroll
             </span>
             <svg
@@ -348,7 +303,7 @@ export function Hero() {
                 d="M5 0v14M1 10l4 4 4-4"
                 stroke="currentColor"
                 strokeWidth="1.1"
-                className="text-salt/50 transition-colors group-hover:text-salt/80"
+                className="text-salt/75 transition-colors group-hover:text-salt"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
@@ -358,10 +313,6 @@ export function Hero() {
       </div>
 
       <style>{`
-        @keyframes heroFade {
-          from { opacity: 0; transform: translateY(6px); }
-          to { opacity: 1; transform: none; }
-        }
         @keyframes tideBob {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(4px); }
